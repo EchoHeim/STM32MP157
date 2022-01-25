@@ -1,0 +1,50 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+/*
+ * Copyright (C) STMicroelectronics 2019 - All Rights Reserved
+ * Author: Alexandre Torgue <alexandre.torgue@st.com> for STMicroelectronics.
+ */
+
+/dts-v1/;
+
+#include "stm32mp157.dtsi"
+#include "stm32mp15xd.dtsi"
+#include "stm32mp15-pinctrl.dtsi"
+#include "stm32mp15xxaa-pinctrl.dtsi"
+#include "stm32mp157d-atk.dtsi"
+#include <dt-bindings/rtc/rtc-stm32.h>
+
+/ {
+	model = "STMicroelectronics STM32MP157C-DK2 Discovery Board";
+	compatible = "st,stm32mp157d-atk", "st,stm32mp157";
+
+	aliases {
+		ethernet0 = &ethernet0;
+		serial0 = &uart4;
+		serial1 = &usart3;
+		serial2 = &uart5;
+		serial3 = &uart7;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	reserved-memory {
+		gpu_reserved: gpu@f6000000 {
+			reg = <0xf6000000 0x8000000>;
+			no-map;
+		};
+		optee_memory: optee@fe000000 {
+			reg = <0xfe000000 0x2000000>;
+			no-map;
+		};
+	};
+};
+
+&optee_memory {
+     status = "okay";
+};
+
+&optee {
+    status = "okay";
+};

@@ -1,0 +1,144 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+/*
+ * Copyright (C) STMicroelectronics 2019 - All Rights Reserved
+ * Author: Alexandre Torgue <alexandre.torgue@st.com> for STMicroelectronics.
+ */
+
+/dts-v1/;
+
+#include "stm32mp157.dtsi"
+#include "stm32mp15xd.dtsi"
+#include "stm32mp15-pinctrl.dtsi"
+#include "stm32mp15xxaa-pinctrl.dtsi"
+#include "stm32mp157d-atk.dtsi"
+#include <dt-bindings/rtc/rtc-stm32.h>
+
+/ {
+	model = "STMicroelectronics STM32MP157C-DK2 Discovery Board";
+	compatible = "st,stm32mp157d-atk", "st,stm32mp157";
+
+	aliases {
+		ethernet0 = &ethernet0;
+		serial0 = &uart4;
+		serial1 = &usart3;
+		serial2 = &uart5;
+		serial3 = &uart7;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	reserved-memory {
+
+		gpu_reserved: gpu@f6000000 {
+			reg = <0xf6000000 0x8000000>;
+			no-map;
+		};
+
+        optee_memory: optee@fe000000 {
+			reg = <0xfe000000 0x2000000>;
+			no-map;
+        };
+	};
+/*
+    panel_rgb: panel-rgb {
+        compatible = "alientek,lcd-rgb";
+        backlight = <&panel_backlight>;
+        status = "okay";
+
+		port {
+			dsi_panel_in: endpoint {
+				remote-endpoint = <&ltdc_ep1_out>;
+			};
+		};
+	};
+*/
+};
+&sound {
+    dais = <&sai2a_port &sai2b_port &spdifrx_port>;
+};
+
+&hdmi {
+    status = "disabled";
+};
+
+&dsi {
+    #address-cells = <1>;
+    #size-cells = <0>;
+    status = "okay";
+
+    ports {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        port@0 {
+            reg = <0>;
+            dsi_in: endpoint {
+                remote-endpoint = <&ltdc_ep1_out>;
+            };
+        };
+
+        port@1 {
+            reg = <1>;
+            dsi_out: endpoint {
+                remote-endpoint = <&dsi_panel_in>;
+            };
+        };
+    };
+
+    panel_dsi: panel-dsi@0 {
+        compatible = "raydium,rm68200";
+        reg = <0>;
+        reset-gpio = <&gpioa 15 GPIO_ACTIVE_LOW>;
+        backlight = <&panel_backlight>;
+        power-supply = <&v3v3>;
+        status = "okay";
+
+        port {
+            dsi_panel_in: endpoint {
+                remote-endpoint = <&dsi_out>;
+            };
+        };
+    };
+};
+
+&i2c2 {
+    ft5x06: ft5x06@38 {
+        compatible = "edt,edt-ft5206";
+        reg = <0x38>;
+        irq-gpios = <&gpioi 1 GPIO_ACTIVE_HIGH>;
+        reset-gpios = <&gpioh 15 GPIO_ACTIVE_LOW>;
+        status = "okay";
+    };
+
+
+    gt9147: gt9147@14 {
+        compatible = "goodix,gt9147","goodix,gt1151";
+        reg = <0x14>;
+        interrupt-parent = <&gpioi>;
+        interrupts = <1 IRQ_TYPE_EDGE_RISING>;
+        irq-gpios = <&gpioi 1 GPIO_ACTIVE_HIGH>;
+        reset-gpios = <&gpioh 15 GPIO_ACTIVE_HIGH>;
+        status = "okay";
+    };
+};
+
+&ltdc {
+    port {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        ltdc_ep1_out: endpoint@1 {
+            reg = <1>;
+            remote-endpoint = <&dsi_in>;
+        };
+    };
+};
+
+&optee_memory {
+     status = "okay";
+};
+&optee {
+    status = "okay";
+};

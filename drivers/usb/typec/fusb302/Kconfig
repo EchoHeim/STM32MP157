@@ -1,0 +1,6 @@
+config TYPEC_FUSB302
+    tristate "Fairchild fusb302 Support"
+    depends on I2C
+    help
+      This option provides a driver for the Fairchild FUSB302.
+      It support typec-pd functionality by controlled using I2C.
