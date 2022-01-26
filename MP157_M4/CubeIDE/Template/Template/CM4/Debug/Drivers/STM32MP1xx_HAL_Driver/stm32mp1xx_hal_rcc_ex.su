@@ -1,0 +1,8 @@
+stm32mp1xx_hal_rcc_ex.c:83:19:RCCEx_PLL2_Config	24	static
+stm32mp1xx_hal_rcc_ex.c:260:19:RCCEx_PLL3_Config	24	static
+stm32mp1xx_hal_rcc_ex.c:430:19:RCCEx_PLL4_Config	24	static
+stm32mp1xx_hal_rcc_ex.c:637:19:HAL_RCCEx_PeriphCLKConfig	616	static
+stm32mp1xx_hal_rcc_ex.c:1895:6:HAL_RCCEx_GetPeriphCLKConfig	16	static
+stm32mp1xx_hal_rcc_ex.c:2011:6:HAL_RCCEx_EnableLSECSS	4	static
+stm32mp1xx_hal_rcc_ex.c:2024:6:HAL_RCCEx_DisableLSECSS	4	static
+stm32mp1xx_hal_rcc_ex.c:2040:10:HAL_RCCEx_GetPeriphCLKFreq	72	static

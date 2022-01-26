@@ -1,0 +1,10 @@
+15:48:41 **** Build of configuration Debug for project Template_CM4 ****
+make -j16 all 
+arm-none-eabi-size   Template_CM4.elf 
+   text	   data	    bss	    dec	    hex	filename
+  10560	     20	   1572	  12152	   2f78	Template_CM4.elf
+Finished building: default.size.stdout
+ 
+
+15:48:42 Build Finished. 0 errors, 0 warnings. (took 253ms)
+
