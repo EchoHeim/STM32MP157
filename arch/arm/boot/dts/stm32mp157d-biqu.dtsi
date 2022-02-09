@@ -654,7 +654,7 @@
 };
 */
 
-/*
+
 &i2c2 {
     pinctrl-names = "default", "sleep";
     pinctrl-0 = <&i2c2_pins_a>;
@@ -665,6 +665,25 @@
     /delete-property/dmas;
     /delete-property/dma-names;
 
+    ft5x06: ft5x06@38 {
+        compatible = "edt,edt-ft5206";
+        reg = <0x38>;
+        irq-gpios = <&gpioi 1 GPIO_ACTIVE_HIGH>;
+        reset-gpios = <&gpioh 15 GPIO_ACTIVE_LOW>;
+        status = "okay";
+    };
+
+    gt9147: gt9147@14 {
+        compatible = "goodix,gt9147","goodix,gt1151";
+        reg = <0x14>;
+        interrupt-parent = <&gpioi>;
+        interrupts = <1 IRQ_TYPE_EDGE_RISING>;
+        irq-gpios = <&gpioi 1 GPIO_ACTIVE_HIGH>;
+        reset-gpios = <&gpioh 15 GPIO_ACTIVE_HIGH>;
+        status = "okay";
+    };
+
+    /*
     hdmi: hdmi-transmitter@39 {
 		compatible = "sil,sii9022";
 		reg = <0x39>;
@@ -695,8 +714,9 @@
 			};
 		};
 	};
+    */
 };
-*/
+
 
 /*
 &i2c4 {
