@@ -1408,4 +1408,14 @@
 				 <STM32_PINMUX('Z', 2, ANALOG)>; /* SPI1_MOSI */
 		};
 	};
+
+	ft5426int_reset_pins_a: ft5426int_reset_pins-0 {
+		pins1 {
+			pinmux = <STM32_PINMUX('I', 1, GPIO)>, 	/* ft5426 INT */
+				<STM32_PINMUX('H', 15, GPIO)>; 		/* ft5426 RESET */
+			bias-pull-up;
+			slew-rate = <0>;
+		};
+	};
+
 };

@@ -666,7 +666,7 @@
     /delete-property/dma-names;
 
     ft5x06: ft5x06@38 {
-        compatible = "edt,edt-ft5206";
+        compatible = "edt,edt-ft5426";
         reg = <0x38>;
         irq-gpios = <&gpioi 1 GPIO_ACTIVE_HIGH>;
         reset-gpios = <&gpioh 15 GPIO_ACTIVE_LOW>;
