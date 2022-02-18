@@ -1399,23 +1399,23 @@
 			pinmux = <STM32_PINMUX('Z', 1, AF5)>; /* SPI1_MISO */
 			bias-disable;
 		};
+
+		pins3 {
+			pinmux = <STM32_PINMUX('Z', 3, GPIO)>; /* SPI1_NSS */
+			drive-push-pull;
+			bias-pull-up;
+			output-high;
+			slew-rate = <0>;
+		};
+
 	};
 
 	spi1_sleep_pins_a: spi1-sleep-0 {
 		pins {
 			pinmux = <STM32_PINMUX('Z', 0, ANALOG)>, /* SPI1_SCK */
 				 <STM32_PINMUX('Z', 1, ANALOG)>, /* SPI1_MISO */
-				 <STM32_PINMUX('Z', 2, ANALOG)>; /* SPI1_MOSI */
+				 <STM32_PINMUX('Z', 2, ANALOG)>, /* SPI1_MOSI */
+				 <STM32_PINMUX('Z', 3, ANALOG)>; /* SPI1_NSS */
 		};
 	};
-
-	ft5426int_reset_pins_a: ft5426int_reset_pins-0 {
-		pins1 {
-			pinmux = <STM32_PINMUX('I', 1, GPIO)>, 	/* ft5426 INT */
-				<STM32_PINMUX('H', 15, GPIO)>; 		/* ft5426 RESET */
-			bias-pull-up;
-			slew-rate = <0>;
-		};
-	};
-
 };

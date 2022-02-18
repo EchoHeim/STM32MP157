@@ -515,13 +515,6 @@
     };
 };
 
-&m_can1 {
-    pinctrl-names = "default", "sleep";
-    pinctrl-0 = <&m_can1_pins_a>;
-    pinctrl-1 = <&m_can1_sleep_pins_a>;
-    status = "okay";
-};
-
 &cec {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&cec_pins_b>;
@@ -529,6 +522,13 @@
 	status = "okay";
 };
 */
+
+&m_can1 {
+    pinctrl-names = "default", "sleep";
+    pinctrl-0 = <&m_can1_pins_a>;
+    pinctrl-1 = <&m_can1_sleep_pins_a>;
+    status = "okay";
+};
 
 &crc1 {
 	status = "okay";
@@ -1014,13 +1014,13 @@
 	};
 };
 
-/*
+
 &spi1 {
     pinctrl-names = "default", "sleep";
     pinctrl-0 = <&spi1_pins_a>;
     pinctrl-1 = <&spi1_sleep_pins_a>;
     cs-gpios = <&gpioz 3 GPIO_ACTIVE_LOW>;
-    status = "disabled";
+    status = "okay";
 
     spidev: icm20608@0 {
         compatible = "alientek,icm20608";
@@ -1028,7 +1028,7 @@
         spi-max-frequency = <8000000>;
     };
 };
-*/
+
 
 &timers4 {
     status = "okay";    

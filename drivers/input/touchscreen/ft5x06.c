@@ -1,12 +1,5 @@
 /***************************************************************
- Copyright © ALIENTEK Co., Ltd. 1998-2029. All rights reserved.
- 文件名    : ft5426.c
- 作者      : 正点原子Linux团队
- 版本      : V1.0
- 描述      : FocalTech FT5426触摸屏驱动程序
- 其他      : 无
- 论坛      : www.openedv.com
- 日志      : 初版V1.0 2021/04/02 正点原子Linux团队创建
+                    FocalTech FT5426触摸屏驱动程序
  ***************************************************************/
 #include <linux/module.h>
 #include <linux/i2c.h>
@@ -16,15 +9,15 @@
 #include <linux/interrupt.h>
 
 /* FT5426寄存器相关宏定义 */
-#define FT5426_DEVIDE_MODE_REG	0x00	// 模式寄存器
+#define FT5426_DEVIDE_MODE_REG	    0x00	// 模式寄存器
 #define FT5426_TD_STATUS_REG    	0x02  	// 状态寄存器
 #define FT5426_TOUCH_DATA_REG   	0x03   	// 触摸数据读取的起始寄存器
 #define FT5426_ID_G_MODE_REG    	0xA4  	// 中断模式寄存器
 
-#define MAX_SUPPORT_POINTS		5    	// ft5426最大支持5点触摸
+#define MAX_SUPPORT_POINTS		    5    	// ft5426最大支持5点触摸
 
 #define TOUCH_EVENT_DOWN      	0x00    // 按下
-#define TOUCH_EVENT_UP           	0x01    // 抬起
+#define TOUCH_EVENT_UP          0x01    // 抬起
 #define TOUCH_EVENT_ON         	0x02    // 接触
 #define TOUCH_EVENT_RESERVED  	0x03    // 保留
 
@@ -74,7 +67,7 @@ static int edt_ft5426_ts_read(struct edt_ft5426_dev *ft5426,
     msg[0].buf = &addr;
     msg[0].len = 1;              	// 1个字节
 
-    msg[1].flags = I2C_M_RD;    	//i2c读
+    msg[1].flags = I2C_M_RD;    	// i2c读
     msg[1].addr = client->addr;
     msg[1].buf = buf;
     msg[1].len = len;

@@ -56,4 +56,4 @@ obj-$(CONFIG_LITEON_AP3216C)    += ap3216c.o
 obj-$(CONFIG_MEMS_ICM20608)    += icm20608.o
 obj-$(CONFIG_DS18B20)    += ds18b20.o
 obj-$(CONFIG_ATK_DHT11)    += dht11.o
-obj-$(CONFIG_DS18B20)    += ds18b20.o
+
