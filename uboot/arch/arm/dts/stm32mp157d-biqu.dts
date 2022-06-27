@@ -1,0 +1,103 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+/*
+ * Copyright (C) STMicroelectronics 2019 - All Rights Reserved
+ * Author: Alexandre Torgue <alexandre.torgue@st.com> for STMicroelectronics.
+ */
+/dts-v1/;
+
+#include "stm32mp157.dtsi"
+#include "stm32mp15xd.dtsi"
+#include "stm32mp15-pinctrl.dtsi"
+#include "stm32mp15xxaa-pinctrl.dtsi"
+#include "stm32mp157-m4-srm.dtsi"
+#include "stm32mp157-m4-srm-pinctrl.dtsi"
+#include "stm32mp157d-biqu.dtsi"
+
+/ {
+	model = "STMicroelectronics STM32MP157D eval daughter";
+	compatible = "st,stm32mp157d-ed1", "st,stm32mp157";
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	aliases {
+		serial0 = &uart4;
+	};
+
+	reserved-memory {
+		gpu_reserved: gpu@f6000000 {
+			reg = <0xf6000000 0x8000000>;
+			no-map;
+		};
+
+		optee_memory: optee@fe000000 {
+			reg = <0xfe000000 0x02000000>;
+			no-map;
+		};
+	};
+
+	panel_backlight: panel-backlight {
+		compatible = "gpio-backlight";
+		gpios = <&gpiod 13 GPIO_ACTIVE_HIGH>;
+		default-on;
+		status = "okay";
+	};
+
+	panel_rgb: panel-rgb {
+		compatible = "simple-panel";
+		pinctrl-names = "default", "sleep";
+		pinctrl-0 = <&ltdc_pins_b>;
+		pinctrl-1 = <&ltdc_pins_sleep_b>;
+		backlight = <&panel_backlight>;
+		status = "okay";
+
+		port {
+			panel_in_rgb: endpoint {
+				remote-endpoint = <&ltdc_ep0_out>;
+			};
+		};
+
+		display-timings {
+			native-mode = <&timing0>; 			/* 时序信息 */
+			timing0: timing0 { 					/* 7 寸 1024*600 分辨率 */
+				clock-frequency = <51200000>; 	/* LCD 像素时钟，单位 Hz */
+				hactive = <1024>; 				/* LCD X 轴像素个数 */
+				vactive = <600>; 				/* LCD Y 轴像素个数 */
+				hfront-porch = <160>; 			/* LCD hfp 参数 */
+				hback-porch = <140>; 			/* LCD hbp 参数 */
+				hsync-len = <20>; 				/* LCD hspw 参数 */
+				vback-porch = <20>; 			/* LCD vbp 参数 */
+				vfront-porch = <12>; 			/* LCD vfp 参数 */
+				vsync-len = <3>; 				/* LCD vspw 参数 */
+			};
+		};
+	};
+};
+
+&ltdc {
+	status = "okay";
+	pinctrl-names = "default";
+	port {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		ltdc_ep0_out: endpoint@0 {
+			reg = <0>;
+			remote-endpoint = <&panel_in_rgb>;
+		};
+	};
+};
+
+&cpu1{
+	cpu-supply = <&vddcore>;
+};
+
+&gpu {
+	contiguous-area = <&gpu_reserved>;
+	status = "okay";
+};
+
+&optee {
+	status = "okay";
+};

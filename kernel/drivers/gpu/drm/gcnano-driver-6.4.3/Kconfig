@@ -1,0 +1,4 @@
+config GPU_GALCORE
+	tristate "GPU_GALCORE support"
+	---help---
+	  Help message of GPU_GALCORE

@@ -1,0 +1,147 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+/*
+ * Copyright (C) STMicroelectronics 2019 - All Rights Reserved
+ * Author: Alexandre Torgue <alexandre.torgue@st.com> for STMicroelectronics.
+ */
+
+/dts-v1/;
+
+#include "stm32mp157.dtsi"
+#include "stm32mp15xd.dtsi"
+#include "stm32mp15-pinctrl.dtsi"
+#include "stm32mp15xxaa-pinctrl.dtsi"
+#include "stm32mp157d-biqu.dtsi"
+#include <dt-bindings/rtc/rtc-stm32.h>
+
+/ {
+	model = "STMicroelectronics STM32MP157C-DK2 Discovery Board";
+	compatible = "st,stm32mp157d-biqu", "st,stm32mp157";
+
+	aliases {
+		ethernet0 = &ethernet0;
+		serial0 = &uart4;
+		serial1 = &uart5;
+    //	serial2 = &usart3;
+	//	serial3 = &uart7;
+	};
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	reserved-memory {
+
+		gpu_reserved: gpu@f6000000 {
+			reg = <0xf6000000 0x8000000>;
+			no-map;
+		};
+
+        optee_memory: optee@fe000000 {
+			reg = <0xfe000000 0x2000000>;
+			no-map;
+        };
+	};
+
+    panel_rgb: panel-rgb {
+        compatible = "alientek,lcd-rgb";
+        status = "disabled";
+        // status = "okay";
+        backlight = <&backlight>;    
+
+        port {
+            rgb_panel_in: endpoint {
+                remote-endpoint = <&ltdc_ep0_out>;
+            };
+        };
+    };
+
+};
+
+&dsi {
+    #address-cells = <1>;
+    #size-cells = <0>;
+    // status = "disabled";
+    status = "okay";
+
+    ports {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        port@0 {
+            reg = <0>;
+            dsi_in: endpoint {
+                remote-endpoint = <&ltdc_ep1_out>;
+            };
+        };
+
+        port@1 {
+            reg = <1>;
+            dsi_out: endpoint {
+                remote-endpoint = <&dsi_panel_in>;
+            };
+        };
+    };
+
+	panel_dsi: panel-dsi@0 {
+        compatible = "biqu,lcd-dsi";
+        
+        // reset-gpio = <&gpioa 15 GPIO_ACTIVE_LOW>;
+        // backlight = <&backlight>;
+        // power-supply = <&v3v3>;
+        
+        reg = <0>;
+        status = "okay";
+
+        port {
+            dsi_panel_in: endpoint {
+                remote-endpoint = <&dsi_out>;
+            };
+        };
+    };
+};
+
+&ltdc {
+	pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&ltdc_pins_b>;
+	pinctrl-1 = <&ltdc_pins_sleep_b>;
+	status = "okay";
+
+	port {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		ltdc_ep0_out: endpoint@0 {
+			reg = <0>;
+            remote-endpoint = <&rgb_panel_in>;
+		};
+
+        ltdc_ep1_out: endpoint@1 {
+            reg = <1>;
+            remote-endpoint = <&dsi_in>;
+        };
+	};
+};
+
+// &sound {
+//     dais = <&sai2a_port &sai2b_port &spdifrx_port>;
+// 	status = "disabled";
+// };
+
+// &hdmi {
+//     status = "disabled";
+// };
+
+&hash1 {
+	status = "okay";
+};
+
+&rng1 {
+	status = "okay";
+};
+
+&optee_memory {
+     status = "okay";
+};
+&optee {
+    status = "okay";
+};

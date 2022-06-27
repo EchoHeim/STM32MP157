@@ -1,0 +1,23 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+/*
+ * Copyright (C) STMicroelectronics 2019 - All Rights Reserved
+ * Author: Alexandre Torgue <alexandre.torgue@st.com> for STMicroelectronics.
+ */
+/dts-v1/;
+
+#include "stm32mp157a-ed1.dts"
+#include "stm32mp15xx-evx.dtsi"
+
+/ {
+	model = "STMicroelectronics STM32MP157A eval daughter on eval mother";
+	compatible = "st,stm32mp157a-ev1", "st,stm32mp157a-ed1", "st,stm32mp157";
+
+	chosen {
+		stdout-path = "serial0:115200n8";
+	};
+
+	aliases {
+		serial1 = &usart3;
+	};
+};
+
