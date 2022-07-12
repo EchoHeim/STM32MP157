@@ -6,4 +6,4 @@
 # Normal rules (sorted alphabetically)
 #
 
-./build/
+build
